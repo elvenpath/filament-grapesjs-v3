@@ -2,25 +2,40 @@
 
 declare(strict_types=1);
 
-// config for Dotswan/FilamentGrapesjs
+// Configuration for Vati/FilamentGrapesjs
+
 return [
 
-    /**
-     * If adding custom assets, you can add them here.
-     * The files must be located in your application's resources directory and should be a relative path
-     * ( the resource_path() function is used to locate the file )
-     * After modifying, you must run composer dump-autoload to regenerate the minified files
-     */
-    'assets' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Assets
+    |--------------------------------------------------------------------------
+    |
+    | Register additional CSS and JavaScript assets for the GrapesJS editor.
+    | Assets must be located in your application's resources directory.
+    | Paths should be relative to the resources directory.
+    |
+    | Example:
+    | 'assets' => [
+    |     'css' => [
+    |         'custom-grapesjs-styles' => 'css/custom-grapesjs.css',
+    |     ],
+    |     'js' => [
+    |         'custom-grapesjs-plugin' => 'js/plugins/custom-plugin.js',
+    |     ],
+    | ],
+    |
+    | After adding custom assets, run: php artisan filament:assets
+    |
+    */
 
+    'assets' => [
         'css' => [
-            // slug => path to js file in your resources directory
-           // 'slug' => 'path/to/js/file.js',
+            // 'slug' => 'path/to/css/file.css',
         ],
 
         'js' => [
-            // slug => path to css file in your resources directory
-            // 'slug' => 'path/to/css/file.css',
-        ]
-    ]
+            // 'slug' => 'path/to/js/file.js',
+        ],
+    ],
 ];

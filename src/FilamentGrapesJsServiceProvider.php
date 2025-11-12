@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dotswan\FilamentGrapesjs;
+namespace Vati\FilamentGrapesjs;
 
 use Filament\Support\Assets\Js;
 use Filament\Support\Assets\Css;
@@ -28,7 +28,7 @@ class FilamentGrapesJsServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()
-                    ->askToStarRepoOnGitHub('dotswan/filament-grapesjs-v3');
+                    ->askToStarRepoOnGitHub('vatichild/filament-grapesjs-v3');
             });
 
         if (file_exists($package->basePath('/../resources/views'))) {
@@ -56,40 +56,41 @@ class FilamentGrapesJsServiceProvider extends PackageServiceProvider
 
     protected function getAssetPackageName(): ?string
     {
-        return 'dotswan/filament-grapesjs-v3';
+        return 'vati/filament-grapesjs-v3';
     }
 
     /**
+     * Get all assets for the package.
+     *
      * @return array<Asset>
      */
     protected function getAssets(): array
     {
         $files = [
-            // AlpineComponent::make('filament-grapesjs', __DIR__.'/../resources/dist/components/filament-grapesjs.js'),
-
-            Css::make('grapesjs', __DIR__.'/../resources/dist/css/grapes.min.css'),
-            Css::make('filament-grapesjs', __DIR__.'/../resources/dist/css/filament-grapesjs.css'),
-
-            Js::make('grapesjs', __DIR__.'/../resources/dist/js/grapes.min.js'),
-            Js::make('filament-grapesjs-tailwindcss', __DIR__.'/../resources/dist/js/grapesjs-tailwind.min.js'),
-            Js::make('filament-grapesjs', __DIR__.'/../resources/dist/js/filament-grapesjs.js'),
+            Css::make('grapesjs', __DIR__ . '/../resources/dist/css/grapes.min.css'),
+            Css::make('filament-grapesjs', __DIR__ . '/../resources/dist/css/filament-grapesjs.css'),
+            Js::make('grapesjs', __DIR__ . '/../resources/dist/js/grapes.min.js'),
+            Js::make('filament-grapesjs-tailwindcss', __DIR__ . '/../resources/dist/js/grapesjs-tailwind.min.js'),
+            Js::make('filament-grapesjs', __DIR__ . '/../resources/dist/js/filament-grapesjs.js'),
         ];
 
-        foreach (config( 'filament-grapesjs.assets', [] ) as $type => $assets)
-        {
-            foreach ($assets as $slug => $path)
-            {
+        $customAssets = config('filament-grapesjs.assets', []);
+
+        foreach ($customAssets as $type => $assets) {
+            if (! is_array($assets)) {
+                continue;
+            }
+
+            foreach ($assets as $slug => $path) {
                 $file = resource_path($path);
-                if (!file_exists($file))
-                {
+
+                if (! file_exists($file)) {
                     continue;
                 }
-                if ($type === 'css')
-                {
+
+                if ($type === 'css') {
                     $files[] = Css::make($slug, $file);
-                }
-                else
-                {
+                } elseif ($type === 'js') {
                     $files[] = Js::make($slug, $file);
                 }
             }

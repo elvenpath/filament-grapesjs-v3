@@ -1,39 +1,39 @@
-# Filament Grapesjs V3
+# Filament GrapesJS v4
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Software License][ico-license]][link-license]
 
+![image](https://github.com/vatichild/filament-grapesjs-v3/assets/20874565/2ad36e55-4d56-42f6-8946-b894dab5d4fa)
 
-![image](https://github.com/dotswan/filament-grapesjs-v3/assets/20874565/2ad36e55-4d56-42f6-8946-b894dab5d4fa)
+## Introduction
 
+A powerful GrapesJS integration for Filament v4 that provides a visual HTML editor with drag-and-drop functionality. This package allows you to add rich HTML content editing capabilities to your Filament forms with ease.
 
-## Introduction 
+### Features
 
-This package extends Filament to include a field type called Grapesjs, leveraging the Grapesjs library to enable visual editing of HTML codes within the Filament components. It allows users to interactively design and incorporate HTML elements via drag-and-drop functionality.
+- 🎨 **Visual HTML Editor** - Drag-and-drop interface for designing HTML content
+- 🔌 **Plugin Support** - Easy integration with GrapesJS plugins (includes Tailwind CSS support)
+- ⚙️ **Highly Configurable** - Customize tools, plugins, and editor settings
+- 🎯 **Filament v4 Compatible** - Built specifically for Filament v4 with PHP 8.2+ support
+- 📱 **Responsive** - Works seamlessly across different screen sizes
+- 💾 **State Management** - Automatic state synchronization with Livewire
 
+## Requirements
 
-* Features include: 
-   * Integration of the Grapesjs library into Filament components.
-   * Drag-and-drop functionality for visually designing HTML elements.
-   * Simplified HTML code editing within Filament.
-* Latest versions of PHP and Filament
-* Best practices applied:
-  * [`README.md`][link-readme] (badges included)
-  * [`LICENSE`][link-license]
-  * [`composer.json`][link-composer-json]
-  * [`.gitignore`][link-gitignore]
-  * [`pint.json`][link-pint]
+- PHP 8.2 or higher
+- Laravel 11.28 or higher
+- Filament v4.0 or higher
 
 ## Installation
 
-You can easily install the package via Composer:
+Install the package via Composer:
 
 ```bash
-composer require dotswan/filament-grapesjs-v3
+composer require vati/filament-grapesjs-v3
 ```
 
-## Publish Configuration
+Publish the configuration file (optional):
 
 ```bash
 php artisan vendor:publish --tag="filament-grapesjs-config"
@@ -41,67 +41,198 @@ php artisan vendor:publish --tag="filament-grapesjs-config"
 
 ## Basic Usage
 
-Resource file:
+### Simple Example
 
 ```php
 <?php
-namespace App\Filament\Resources;
-use Filament\Resources\Resource;
-use Filament\Resources\Forms\Form;
-use Dotswan\FilamentGrapesjs\Fields\GrapesJs;
-...
 
-class FilamentResource extends Resource
+namespace App\Filament\Resources;
+
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Vati\FilamentGrapesjs\Fields\GrapesJs;
+
+class PageResource extends Resource
 {
-    ...
-    public static function form(Form $form)
+    public static function form(Form $form): Form
     {
         return $form->schema([
-                GrapesJs::make( 'page_layout' )
-                    ->tools([
-                        // tools you want to include
-                    ])
-                    ->plugins([
-                        'grapesjs-tailwind',
-                        // other plugins you've included in your resources directory and referenced in filament-grapesjs.php
-                        // e.g. 'gjs-blocks-basic, https://github.com/GrapesJS/blocks-basic'
-                    ])
-                    ->settings([
-                        'storageManager' => [
-                            'type' => 'local',
-                            'options' => [
-                                'local' => [
-                                    'key' => 'gsproject-test',
+            GrapesJs::make('content')
+                ->label('Page Content')
+                ->required(),
+        ]);
+    }
+}
+```
+
+### Advanced Example
+
+```php
+<?php
+
+namespace App\Filament\Resources;
+
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Vati\FilamentGrapesjs\Fields\GrapesJs;
+
+class PageResource extends Resource
+{
+    public static function form(Form $form): Form
+    {
+        return $form->schema([
+            GrapesJs::make('content')
+                ->label('Page Content')
+                ->helperText('Design your page using drag-and-drop')
+                ->required()
+                ->minHeight(600)
+                ->tools([
+                    // Specify which tools to show in the editor toolbar
+                ])
+                ->plugins([
+                    'grapesjs-tailwind',
+                    // Add more GrapesJS plugins here
+                ])
+                ->settings([
+                    'storageManager' => [
+                        'type' => 'local',
+                        'options' => [
+                            'local' => [
+                                'key' => 'gjs-project',
+                            ],
+                        ],
+                    ],
+                    'styleManager' => [
+                        'sectors' => [
+                            [
+                                'name' => 'General',
+                                'open' => false,
+                                'buildProps' => [
+                                    'background-color',
+                                    'color',
+                                    'font-size',
+                                    'font-weight',
+                                ],
+                            ],
+                            [
+                                'name' => 'Layout',
+                                'open' => false,
+                                'buildProps' => [
+                                    'width',
+                                    'height',
+                                    'padding',
+                                    'margin',
+                                    'display',
                                 ],
                             ],
                         ],
-                        'styleManager' => [
-                            'sectors' => [
-                                [
-                                    'name' => 'General',
-                                    'open' => false,
-                                    'buildProps' => [
-                                        'background-color',
-                                        // other properties you want to include
-                                    ],
-                                ],
+                    ],
+                    'deviceManager' => [
+                        'devices' => [
+                            [
+                                'name' => 'Desktop',
+                                'width' => '',
                             ],
-                        ]
-                    ])
-                    ->id( 'page_layout' )
-           ]);
+                            [
+                                'name' => 'Tablet',
+                                'width' => '768px',
+                            ],
+                            [
+                                'name' => 'Mobile',
+                                'width' => '375px',
+                            ],
+                        ],
+                    ],
+                ]),
+        ]);
     }
-    ...
 }
+```
+
+## Configuration
+
+### Available Methods
+
+#### `minHeight(int|Closure|null $minHeight)`
+
+Set the minimum height of the editor in pixels.
+
+```php
+GrapesJs::make('content')
+    ->minHeight(800)
+```
+
+#### `tools(array|Closure $tools)`
+
+Define which tools should be available in the editor toolbar.
+
+```php
+GrapesJs::make('content')
+    ->tools([
+        'sw-visibility',
+        'preview',
+        'fullscreen',
+        'export-template',
+    ])
+```
+
+#### `plugins(array|Closure $plugins)`
+
+Specify which GrapesJS plugins to load.
+
+```php
+GrapesJs::make('content')
+    ->plugins([
+        'grapesjs-tailwind',
+        'grapesjs-blocks-basic',
+    ])
+```
+
+#### `settings(array|Closure $settings)`
+
+Pass custom configuration to the GrapesJS instance.
+
+```php
+GrapesJs::make('content')
+    ->settings([
+        'canvas' => [
+            'styles' => ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'],
+        ],
+    ])
+```
+
+### Custom Assets
+
+You can register custom CSS and JavaScript assets in the configuration file:
+
+```php
+// config/filament-grapesjs.php
+
+return [
+    'assets' => [
+        'css' => [
+            'custom-styles' => 'css/grapesjs-custom.css',
+        ],
+        'js' => [
+            'custom-plugin' => 'js/grapesjs-plugins/my-plugin.js',
+        ],
+    ],
+];
+```
+
+After adding custom assets, run:
+
+```bash
+php artisan filament:assets
 ```
 
 ## License
 
-[MIT License](LICENSE.md) © Dotswan
+[MIT License](LICENSE.md) © Vati
 
 ## Security
 
-We take security seriously. If you discover any bugs or security issues, please help us maintain a secure project by reporting them through our [`GitHub issue tracker`][link-github-issue]. You can also contact us directly at [tech@dotswan.com](mailto:tech@dotswan.com).
+We take security seriously. If you discover any bugs or security issues, please help us maintain a secure project by reporting them through our [`GitHub issue tracker`][link-github-issue].
 
 ## Contribution
 
@@ -116,16 +247,16 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request
 
 
-[ico-version]: https://img.shields.io/packagist/v/dotswan/filament-grapesjs-v3.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/vati/filament-grapesjs-v3.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/dotswan/filament-grapesjs-v3.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/vati/filament-grapesjs-v3.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/dotswan/filament-grapesjs-v3
-[link-license]: https://github.com/dotswan/filament-grapesjs-v3/blob/master/LICENSE.md
-[link-downloads]: https://packagist.org/packages/dotswan/filament-grapesjs-v3
-[link-readme]: https://github.com/dotswan/filament-grapesjs-v3/blob/master/README.md
-[link-github-issue]: https://github.com/dotswan/filament-grapesjs-v3/issues
-[link-composer-json]: https://github.com/dotswan/filament-grapesjs-v3/blob/master/composer.json
-[link-gitignore]: https://github.com/dotswan/filament-grapesjs-v3/blob/master/.gitignore
-[link-pint]: https://github.com/dotswan/filament-grapesjs-v3/blob/master/pint.json
-[link-author]: https://github.com/dotswan
+[link-packagist]: https://packagist.org/packages/vati/filament-grapesjs-v3
+[link-license]: https://github.com/vatichild/filament-grapesjs-v3/blob/master/LICENSE.md
+[link-downloads]: https://packagist.org/packages/vati/filament-grapesjs-v3
+[link-readme]: https://github.com/vatichild/filament-grapesjs-v3/blob/master/README.md
+[link-github-issue]: https://github.com/vatichild/filament-grapesjs-v3/issues
+[link-composer-json]: https://github.com/vatichild/filament-grapesjs-v3/blob/master/composer.json
+[link-gitignore]: https://github.com/vatichild/filament-grapesjs-v3/blob/master/.gitignore
+[link-pint]: https://github.com/vatichild/filament-grapesjs-v3/blob/master/pint.json
+[link-author]: https://github.com/vatichild
