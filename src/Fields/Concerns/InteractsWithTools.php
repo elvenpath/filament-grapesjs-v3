@@ -25,7 +25,7 @@ trait InteractsWithTools
      */
     protected array | Closure $plugins = [
         'gjs-blocks-basic',
-        'grapesjs-tailwind',
+        'grapesjs-tailwindcss-plugin',
     ];
 
     /**

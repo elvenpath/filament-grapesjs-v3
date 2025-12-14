@@ -109,6 +109,11 @@
     lodash.merge "^4.6.2"
     postcss-selector-parser "6.0.10"
 
+"@tarekraafat/autocomplete.js@^10.2.9":
+  version "10.2.9"
+  resolved "https://registry.npmjs.org/@tarekraafat/autocomplete.js/-/autocomplete.js-10.2.9.tgz"
+  integrity sha512-A7OP3iJDTWeO85M3Vxu391acu9SmDguormHpMZ13khuyM180dKl9O1gAXSDA322XwkYuUU1Ad7WchW1TQNNuDw==
+
 "@types/backbone@1.4.15":
   version "1.4.15"
   resolved "https://registry.npmjs.org/@types/backbone/-/backbone-1.4.15.tgz"
@@ -930,10 +935,13 @@ grapesjs-blocks-basic@^1.0.2:
   resolved "https://registry.npmjs.org/grapesjs-blocks-basic/-/grapesjs-blocks-basic-1.0.2.tgz"
   integrity sha512-SsPKf/CvQkZ+kABOsN01auAPHXh/2J20g0AWYF7fHR3Gw3TZLtdIxT1mk90Qzi76u/7sUYi3CTI+i3ZaTtXHRA==
 
-grapesjs-tailwind@^1.0.11:
-  version "1.0.13"
-  resolved "https://registry.npmjs.org/grapesjs-tailwind/-/grapesjs-tailwind-1.0.13.tgz"
-  integrity sha512-goTp1xBwkmSVucbI67w+cLvjJmvh3mGWac3O6ebYbi3ENKzUq1HYetLI7cFMJIjBbI01O1LwTOh08/ifHeeYHg==
+grapesjs-tailwindcss-plugin@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.npmjs.org/grapesjs-tailwindcss-plugin/-/grapesjs-tailwindcss-plugin-0.1.10.tgz"
+  integrity sha512-UyU5/Zn79GHs/GsTJRgXSaFpfUG7HSh5XHr3EEgM36mMsP6LqFEkJjljgLJpArdtJMSV5P2SZjA+r5Zfqire4w==
+  dependencies:
+    "@tarekraafat/autocomplete.js" "^10.2.9"
+    tailwindcss "^4.1.7"
 
 grapesjs@^0.22.5:
   version "0.22.14"
@@ -2018,6 +2026,11 @@ tailwindcss@^3.3.3, "tailwindcss@>=3.0.0 || >= 3.0.0-alpha.1", "tailwindcss@>=3.
     postcss-selector-parser "^6.1.2"
     resolve "^1.22.8"
     sucrase "^3.35.0"
+
+tailwindcss@^4.1.7:
+  version "4.1.18"
+  resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.1.18.tgz"
+  integrity sha512-4+Z+0yiYyEtUVCScyfHCxOYP06L5Ne+JiHhY2IjR2KWMIWhJOYZKLSGZaP5HkZ8+bY0cxfzwDE5uOmzFXyIwxw==
 
 thenify-all@^1.0.0:
   version "1.6.0"
