@@ -66,6 +66,11 @@ document.addEventListener('alpine:init', () => {
                 // Initialize GrapesJS instance
                 this.instance = grapesjs.init(editorSettings);
 
+                // Load custom blocks if available (defined by consuming app)
+                if (typeof window.grapejsCustomBlocks === 'function') {
+                    window.grapejsCustomBlocks(this.instance);
+                }
+
                 // Set up event listener for content updates
                 this.instance.on('update', () => {
                     this.updateState();
