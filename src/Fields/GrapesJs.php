@@ -6,7 +6,7 @@ namespace Vati\FilamentGrapesjs\Fields;
 
 use Closure;
 use Filament\Forms\Components\Field;
-use Filament\Forms\Concerns\HasStateBindingModifiers;
+use Filament\Schemas\Concerns\HasStateBindingModifiers;
 use Vati\FilamentGrapesjs\Fields\Concerns\InteractsWithTools;
 
 /**
@@ -21,23 +21,6 @@ class GrapesJs extends Field
     use InteractsWithTools;
 
     protected string $view = 'filament-grapesjs::fields.grapesjs';
-
-    /**
-     * @var array<string>|Closure
-     */
-    protected array | Closure $tools = [];
-
-    /**
-     * @var array<string>|Closure
-     */
-    protected array | Closure $plugins = [
-        'grapesjs-tailwind',
-    ];
-
-    /**
-     * @var array<string, mixed>|Closure
-     */
-    protected array | Closure $settings = [];
 
     protected int | Closure | null $minHeight = 768;
 

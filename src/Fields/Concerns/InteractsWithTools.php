@@ -23,7 +23,9 @@ trait InteractsWithTools
      *
      * @var array<string>|Closure
      */
-    protected array | Closure $plugins = [];
+    protected array | Closure $plugins = [
+        'grapesjs-tailwind',
+    ];
 
     /**
      * Settings configuration.

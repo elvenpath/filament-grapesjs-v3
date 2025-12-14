@@ -18,23 +18,56 @@ document.addEventListener('alpine:init', () => {
              * Initialize the GrapesJS editor
              */
             init() {
+                this.waitForDependencies();
+            },
+
+            waitForDependencies() {
+                if (typeof window.grapesjs === 'undefined') {
+                    requestAnimationFrame(() => this.waitForDependencies());
+                    return;
+                }
+                this.$nextTick(() => this.initEditor());
+            },
+
+            initEditor() {
+                const containerEl = this.$el.querySelector('.grapesjs-wrapper');
+                if (!containerEl) {
+                    console.error('GrapesJS: Container not found');
+                    return;
+                }
+
+                // Build i18n config - merge with settings.i18n if present
+                const i18nFromSettings = settings.i18n || {};
+                const i18nConfig = {
+                    ...i18nFromSettings,
+                    ...(window.grapejsLocaleRo ? {
+                        messages: {
+                            ...(i18nFromSettings.messages || {}),
+                            ro: window.grapejsLocaleRo,
+                        },
+                    } : {}),
+                };
+
+                // Remove i18n from settings to avoid double-apply
+                const { i18n: _, ...restSettings } = settings;
+
                 const editorSettings = {
                     height: `${minHeight}px`,
-                    container: container || '.filament-grapesjs .grapesjs-wrapper',
+                    container: containerEl,
                     showOffsets: true,
                     fromElement: true,
                     noticeOnUnload: false,
                     storageManager: false,
-                    loadHtml: state,
                     plugins: plugins,
-                    ...settings,
+                    i18n: i18nConfig,
+                    ...restSettings,
                 };
 
                 // Initialize GrapesJS instance
                 this.instance = grapesjs.init(editorSettings);
 
                 // Set up event listener for content updates
-                this.instance.on('update', (event) => {
+                this.instance.on('update', () => {
                     this.updateState();
                 });
 
