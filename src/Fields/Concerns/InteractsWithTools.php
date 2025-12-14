@@ -24,6 +24,7 @@ trait InteractsWithTools
      * @var array<string>|Closure
      */
     protected array | Closure $plugins = [
+        'gjs-blocks-basic',
         'grapesjs-tailwind',
     ];
 
